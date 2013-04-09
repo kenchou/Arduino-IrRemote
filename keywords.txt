@@ -1,0 +1,50 @@
+#######################################
+# Syntax Coloring Map For IrRemote
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+IrData			KEYWORD1
+IrReciver		KEYWORD1
+IrTransmitter	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+blink13	KEYWORD2
+decode	KEYWORD2
+enableIn	KEYWORD2
+resume	KEYWORD2
+enableOut	KEYWORD2
+sendNec	KEYWORD2
+sendSony	KEYWORD2
+sendSanyo KEYWORD2
+sendMitsubishi KEYWORD2
+sendRaw	KEYWORD2
+sendRc5	KEYWORD2
+sendRc6	KEYWORD2
+sendDish KEYWORD2
+sendSharp KEYWORD2
+sendPanasonic KEYWORD2
+sendJvc KEYWORD2
+
+#
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+NEC	LITERAL1
+SONY	LITERAL1
+SANYO LITERAL1
+MITSUBISHI LITERAL1
+RC5	LITERAL1
+RC6	LITERAL1
+DISH LITERAL1
+SHARP LITERAL1
+PANASONIC LITERAL1
+JVC LITERAL1
+UNKNOWN	LITERAL1
+REPEAT	LITERAL1
