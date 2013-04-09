@@ -6,13 +6,14 @@ Arduino-IrRemote
 
 名字空间：IrRemote
 
-发射器
-IrRemote::Transmitter
-接收器
-IrRemote::Receiver
+* 发射器
+> IrRemote::Transmitter
+
+* 接收器
+> IrRemote::Receiver
 
 example:
-
+<code>
 IrRemote::Transmitter irTransmitter;
 IrRemote::Receiver irReciver;
 IrRemote::Data irData;
@@ -20,3 +21,4 @@ IrRemote::Data irData;
 if (irReciver.decode(&irData)) {
   irTransmitter.send(&irData);
 }
+</code>
