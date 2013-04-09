@@ -13,12 +13,12 @@ Arduino-IrRemote
 > IrRemote::Receiver
 
 example:
-<code>
-IrRemote::Transmitter irTransmitter;
-IrRemote::Receiver irReciver;
-IrRemote::Data irData;
 
-if (irReciver.decode(&irData)) {
-  irTransmitter.send(&irData);
-}
-</code>
+    IrRemote::Transmitter irTransmitter;
+    IrRemote::Receiver irReciver;
+    IrRemote::Data irData;
+    
+    if (irReciver.decode(&irData)) {
+      irTransmitter.send(&irData);
+    }
+
