@@ -16,6 +16,9 @@
 #ifndef IrRemote_h
 #define IrRemote_h
 
+namespace IrRemote
+{
+
 // The following are compile-time library options.
 // If you change them, recompile the library.
 // If DEBUG is defined, a lot of debugging output will be printed during decoding.
@@ -25,14 +28,15 @@
 // #define TEST
 
 // Results returned from the decoder
-class decode_results {
-public:
-  int decode_type; // NEC, SONY, RC5, UNKNOWN
-  unsigned int panasonicAddress; // This is only used for decoding Panasonic data
-  unsigned long value; // Decoded value
-  int bits; // Number of bits in decoded value
-  volatile unsigned int *rawbuf; // Raw intervals in .5 us ticks
-  int rawlen; // Number of records in rawbuf.
+class IrData
+{
+	public:
+		int decodeType; // NEC, SONY, RC5, UNKNOWN
+		unsigned int panasonicAddress; // This is only used for decoding Panasonic data
+		unsigned long value; // Decoded value
+		int bits; // Number of bits in decoded value
+		volatile unsigned int *rawbuf; // Raw intervals in .5 us ticks
+		int rawlen; // Number of records in rawbuf.
 };
 
 // Values for decode_type
@@ -52,28 +56,27 @@ public:
 #define REPEAT 0xffffffff
 
 // main class for receiving IR
-class IRrecv
+class Reciver
 {
-public:
-  IRrecv(int recvpin);
-  void blink13(int blinkflag);
-  int decode(decode_results *results);
-  void enableIRIn();
-  void resume();
-private:
-  // These are called by decode
-  int getRClevel(decode_results *results, int *offset, int *used, int t1);
-  long decodeNEC(decode_results *results);
-  long decodeSony(decode_results *results);
-  long decodeSanyo(decode_results *results);
-  long decodeMitsubishi(decode_results *results);
-  long decodeRC5(decode_results *results);
-  long decodeRC6(decode_results *results);
-  long decodePanasonic(decode_results *results);
-  long decodeJVC(decode_results *results);
-  long decodeHash(decode_results *results);
-  int compare(unsigned int oldval, unsigned int newval);
-
+	public:
+		Reciver(int recvPin);
+		void blink13(int blinkFlag);
+		int decode(IrData *results);
+		void enableIn();
+		void resume();
+	private:
+		// These are called by decode
+		int getRClevel(IrData *results, int *offset, int *used, int t1);
+		long decodeNec(IrData *results);
+		long decodeSony(IrData *results);
+		long decodeSanyo(IrData *results);
+		long decodeMitsubishi(IrData *results);
+		long decodeRc5(IrData *results);
+		long decodeRc6(IrData *results);
+		long decodePanasonic(IrData *results);
+		long decodeJvc(IrData *results);
+		long decodeHash(IrData *results);
+		int compare(unsigned int oldval, unsigned int newval);
 } 
 ;
 
@@ -84,26 +87,27 @@ private:
 #define VIRTUAL
 #endif
 
-class IRsend
+class Transmitter
 {
-public:
-  IRsend() {}
-  void sendNEC(unsigned long data, int nbits);
-  void sendSony(unsigned long data, int nbits);
-  // Neither Sanyo nor Mitsubishi send is implemented yet
-  //  void sendSanyo(unsigned long data, int nbits);
-  //  void sendMitsubishi(unsigned long data, int nbits);
-  void sendRaw(unsigned int buf[], int len, int hz);
-  void sendRC5(unsigned long data, int nbits);
-  void sendRC6(unsigned long data, int nbits);
-  void sendDISH(unsigned long data, int nbits);
-  void sendSharp(unsigned long data, int nbits);
-  void sendPanasonic(unsigned int address, unsigned long data);
-  void sendJVC(unsigned long data, int nbits, int repeat); // *Note instead of sending the REPEAT constant if you want the JVC repeat signal sent, send the original code value and change the repeat argument from 0 to 1. JVC protocol repeats by skipping the header NOT by sending a separate code value like NEC does.
-  // private:
-  void enableIROut(int khz);
-  VIRTUAL void mark(int usec);
-  VIRTUAL void space(int usec);
+	public:
+		Transmitter() {};
+		void send(IrData *data);
+		void sendRaw(unsigned int buf[], int len, int hz);
+		void sendNec(unsigned long data, int nbits);
+		void sendSony(unsigned long data, int nbits);
+		// Neither Sanyo nor Mitsubishi send is implemented yet
+		//  void sendSanyo(unsigned long data, int nbits);
+		//  void sendMitsubishi(unsigned long data, int nbits);
+		void sendRc5(unsigned long data, int nbits);
+		void sendRc6(unsigned long data, int nbits);
+		void sendDish(unsigned long data, int nbits);
+		void sendSharp(unsigned long data, int nbits);
+		void sendPanasonic(unsigned int address, unsigned long data);
+		void sendJvc(unsigned long data, int nbits, int repeat); // *Note instead of sending the REPEAT constant if you want the JVC repeat signal sent, send the original code value and change the repeat argument from 0 to 1. JVC protocol repeats by skipping the header NOT by sending a separate code value like NEC does.
+		// private:
+		void enableOut(int khz);
+		VIRTUAL void mark(int usec);
+		VIRTUAL void space(int usec);
 }
 ;
 
@@ -116,4 +120,5 @@ public:
 // when received due to sensor lag.
 #define MARK_EXCESS 100
 
+}
 #endif
