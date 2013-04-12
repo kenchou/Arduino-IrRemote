@@ -31,7 +31,7 @@ namespace IrRemote
 class IrData
 {
 	public:
-		int decodeType; // NEC, SONY, RC5, UNKNOWN
+		int encodeType; // NEC, SONY, RC5, UNKNOWN
 		unsigned int panasonicAddress; // This is only used for decoding Panasonic data
 		unsigned long value; // Decoded value
 		int bits; // Number of bits in decoded value
@@ -56,10 +56,10 @@ class IrData
 #define REPEAT 0xffffffff
 
 // main class for receiving IR
-class Reciver
+class Receiver
 {
 	public:
-		Reciver(int recvPin);
+		Receiver(int recvPin);
 		void blink13(int blinkFlag);
 		int decode(IrData *results);
 		void enableIn();
