@@ -66,7 +66,7 @@ class Receiver
 		void resume();
 	private:
 		// These are called by decode
-		int getRClevel(IrData *results, int *offset, int *used, int t1);
+		int getRclevel(IrData *results, int *offset, int *used, int t1);
 		long decodeNec(IrData *results);
 		long decodeSony(IrData *results);
 		long decodeSanyo(IrData *results);

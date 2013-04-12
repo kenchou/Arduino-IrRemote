@@ -685,11 +685,11 @@ long Receiver::decodeMitsubishi(IrData *results) {
 // Gets one undecoded level at a time from the raw buffer.
 // The RC5/6 decoding is easier if the data is broken into time intervals.
 // E.g. if the buffer has MARK for 2 time intervals and SPACE for 1,
-// successive calls to getRClevel will return MARK, MARK, SPACE.
+// successive calls to getRclevel will return MARK, MARK, SPACE.
 // offset and used are updated to keep track of the current position.
 // t1 is the time interval for a single bit in microseconds.
 // Returns -1 for error (measured time interval is not a multiple of t1).
-int Receiver::getRClevel(IrData *results, int *offset, int *used, int t1) {
+int Receiver::getRclevel(IrData *results, int *offset, int *used, int t1) {
   if (*offset >= results->rawlen) {
     // After end of recorded buffer, assume SPACE.
     return SPACE;
@@ -736,13 +736,13 @@ long Receiver::decodeRc5(IrData *results) {
   long data = 0;
   int used = 0;
   // Get start bits
-  if (getRClevel(results, &offset, &used, RC5_T1) != MARK) return ERR;
-  if (getRClevel(results, &offset, &used, RC5_T1) != SPACE) return ERR;
-  if (getRClevel(results, &offset, &used, RC5_T1) != MARK) return ERR;
+  if (getRclevel(results, &offset, &used, RC5_T1) != MARK) return ERR;
+  if (getRclevel(results, &offset, &used, RC5_T1) != SPACE) return ERR;
+  if (getRclevel(results, &offset, &used, RC5_T1) != MARK) return ERR;
   int nbits;
   for (nbits = 0; offset < irparams.rawlen; nbits++) {
-    int levelA = getRClevel(results, &offset, &used, RC5_T1); 
-    int levelB = getRClevel(results, &offset, &used, RC5_T1);
+    int levelA = getRclevel(results, &offset, &used, RC5_T1); 
+    int levelB = getRclevel(results, &offset, &used, RC5_T1);
     if (levelA == SPACE && levelB == MARK) {
       // 1 bit
       data = (data << 1) | 1;
@@ -780,20 +780,20 @@ long Receiver::decodeRc6(IrData *results) {
   long data = 0;
   int used = 0;
   // Get start bit (1)
-  if (getRClevel(results, &offset, &used, RC6_T1) != MARK) return ERR;
-  if (getRClevel(results, &offset, &used, RC6_T1) != SPACE) return ERR;
+  if (getRclevel(results, &offset, &used, RC6_T1) != MARK) return ERR;
+  if (getRclevel(results, &offset, &used, RC6_T1) != SPACE) return ERR;
   int nbits;
   for (nbits = 0; offset < results->rawlen; nbits++) {
     int levelA, levelB; // Next two levels
-    levelA = getRClevel(results, &offset, &used, RC6_T1); 
+    levelA = getRclevel(results, &offset, &used, RC6_T1); 
     if (nbits == 3) {
       // T bit is double wide; make sure second half matches
-      if (levelA != getRClevel(results, &offset, &used, RC6_T1)) return ERR;
+      if (levelA != getRclevel(results, &offset, &used, RC6_T1)) return ERR;
     } 
-    levelB = getRClevel(results, &offset, &used, RC6_T1);
+    levelB = getRclevel(results, &offset, &used, RC6_T1);
     if (nbits == 3) {
       // T bit is double wide; make sure second half matches
-      if (levelB != getRClevel(results, &offset, &used, RC6_T1)) return ERR;
+      if (levelB != getRclevel(results, &offset, &used, RC6_T1)) return ERR;
     } 
     if (levelA == MARK && levelB == SPACE) { // reversed compared to RC5
       // 1 bit
@@ -1026,4 +1026,4 @@ void Transmitter::sendDish(unsigned long data, int nbits)
   }
 }
 
-}//end namespace
+}// namespace IrRemote
