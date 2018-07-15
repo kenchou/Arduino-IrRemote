@@ -6,8 +6,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-IrData			KEYWORD1
-IrReciver		KEYWORD1
+IrData	KEYWORD1
+IrReciver	KEYWORD1
 IrTransmitter	KEYWORD1
 
 #######################################
@@ -26,10 +26,10 @@ sendMitsubishi KEYWORD2
 sendRaw	KEYWORD2
 sendRc5	KEYWORD2
 sendRc6	KEYWORD2
-sendDish KEYWORD2
-sendSharp KEYWORD2
-sendPanasonic KEYWORD2
-sendJvc KEYWORD2
+sendDish	KEYWORD2
+sendSharp	KEYWORD2
+sendPanasonic	KEYWORD2
+sendJvc	KEYWORD2
 
 #
 #######################################
@@ -42,9 +42,9 @@ SANYO LITERAL1
 MITSUBISHI LITERAL1
 RC5	LITERAL1
 RC6	LITERAL1
-DISH LITERAL1
-SHARP LITERAL1
-PANASONIC LITERAL1
-JVC LITERAL1
+DISH	LITERAL1
+SHARP	LITERAL1
+PANASONIC	LITERAL1
+JVC	LITERAL1
 UNKNOWN	LITERAL1
 REPEAT	LITERAL1
